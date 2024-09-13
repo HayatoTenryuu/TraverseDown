@@ -29,7 +29,7 @@
 %}
 
 %% Call function
-In = 25;
+In = [1:1000];
 InStr = string(In);
 Inn = "";
 
@@ -47,8 +47,24 @@ for (n = 1:length(InStr))
     end
 end
 
-command = "traverseDown.exe" + " " + Inn;
-system(command);
+% Save input to file and pass to Prolog via import in C.
+fileID0 = fopen("Input.praenuntio","w"); 
+    
+if (fileID0 == -1)
+    fprintf("Error: Cannot create Praenuntio." + newline + newline);
+    return;
+end
+
+fprintf(fileID0, "%s", Inn);
+fclose(fileID0);
+command = "traverseDown.exe";
+
+yn = system(command);
+
+if (yn ~= 0)
+    fprintf("The system call didn't work!" + newline);
+    return
+end
 
 %% Import Data
 
@@ -60,7 +76,7 @@ end
 
 data = textscan(fileID, "%s");
 deeta = string(data{1});
-
+fclose(fileID);
 
 %% Format Data
 
@@ -204,7 +220,7 @@ subtitle("(Arrows point to next number.)");
 set( get(Q2B,'XLabel'), 'String', 'Number of Steps until Termination' );
 set( get(Q2B,'YLabel'), 'String', 'Starting Number' );
 
-q2b.MaxHeadSize = 0.005;
+q2b.MaxHeadSize = 0.0005;
 q2b.Marker = "*";
 
 
@@ -225,7 +241,7 @@ set( get(Q3,'XLabel'), 'String', 'Starting Number' );
 set( get(Q3,'YLabel'), 'String', 'Number of Steps until Termination' );
 set( get(Q3,'ZLabel'), 'String', 'Number of Steps until Termination' );
 
-q3.MaxHeadSize = 0.003;
+q3.MaxHeadSize = 0.0003;
 q3.Marker = "*";
 
 
