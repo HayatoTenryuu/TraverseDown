@@ -22,14 +22,24 @@
 
 /* Find the chains and save the list */
 traverseDownList(InList, OutList) :-
-	(atom(InList) ->  
+	(number(InList) ->													% If InList is just a number => A.
 	(
-		atom_string(InList, InString), 
-		commaReplaceDown(InString, OutString),
-		term_string(T, OutString)
+		term_string(InList, OutString),										
+		T = InList															
 	);
 	(
-		T = InList
+		include(atom, InList, TestList),
+		length(TestList, Len),
+		(Len > 0 ->  													% Else if InList is a string list => "[A, B, C]", "[A]", "A".
+		(
+			commaReplaceDown(InList, OutString),
+			term_string(T, OutString)
+		);
+		(																% Else, InList is a plain list => [A, B, C], [A].
+			term_string(InList, InString), 
+			commaReplaceDown(InString, OutString),
+			term_string(T, OutString)
+		))
 	)),
 	string_length(OutString, Le),
 	(Le #= 1 ->
