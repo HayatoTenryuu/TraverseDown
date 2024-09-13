@@ -35,10 +35,12 @@ int main(int argc, char **argv)                                                 
     /* Section for debugging inputs before they reach Prolog */
     /*-------------------------------------------------------*/
 
-    /*printf("\n");
+    /*
+    printf("\n");
     printf(expression);
-    printf("\n");*/
-
+    printf("\n");
+    printf("Calling Prolog!\n\n");
+    */
 
     /*-----------------------*/
     /*     Prolog Parts      */                                                     

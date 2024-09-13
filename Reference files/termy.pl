@@ -22,31 +22,40 @@
 
 /* Find the chains and save the list */
 traverseDownList(InList, OutList) :-
+	% write_canonical(InList),
+	% nl,
 	(number(InList) ->													% If InList is just a number => A.
 	(
 		term_string(InList, OutString),										
 		T = InList															
 	);
 	(
-		include(atom, InList, TestList),
-		length(TestList, Len),
-		(Len > 0 ->  													% Else if InList is a string list => "[A, B, C]", "[A]", "A".
+		(atom(InList) ->												% Else if InList is char list => '[A, B, C]'
 		(
-			commaReplaceDown(InList, OutString),
-			term_string(T, OutString)
-		);
-		(																% Else, InList is a plain list => [A, B, C], [A].
-			term_string(InList, InString), 
+			atom_string(InList, InString),
 			commaReplaceDown(InString, OutString),
 			term_string(T, OutString)
+		);
+		(
+			include(atom, InList, TestList),
+			length(TestList, Len),
+			(Len > 0 ->  												% Else if InList is a string list (list of chars) => "[A, B, C]", "[A]", "A".
+			(
+				commaReplaceDown(InList, OutString),
+				term_string(T, OutString)
+			);
+			(															% Else, InList is a plain list (list of elements) => [A, B, C], [A].
+				term_string(InList, InString), 
+				commaReplaceDown(InString, OutString),
+				term_string(T, OutString)			
+			))
 		))
 	)),
 	string_length(OutString, Le),
 	(Le #= 1 ->
 	(
-		nl,
+		%nl,
 		traverseDown(T, OutList),
-		nl,
 		nl
 	);
 	(
@@ -58,9 +67,9 @@ traverseDownList(InList, OutList) :-
 /* Take a list and traverse its numbers down to 1 */
 traverseDownList2( [Head | Tail], List ) :-
 	List = [ListA | ListB],
-	nl,
+	%nl,
 	traverseDown(Head, ListA),
-	nl,
+	%nl,
 	traverseDownList2(Tail, ListB).
 	
 	%% This performs the normal traversal for every element of the input list.
@@ -69,15 +78,17 @@ traverseDownList2( [Head | Tail], List ) :-
 
 /* Stop condition for empty list */
 traverseDownList2( [], [] ) :-
-	nl.
+	%nl,
+	!.
 	
 	%% This puts a newline between the last chain and the output list.
 	
 	
 /* Take a number and traverse it down */
 traverseDown(Input, List) :-
-	(decrement(Input, List) -> Output #= 1; Output #= 0),
-	write(Output).
+	% write(Output),
+	(decrement(Input, List) -> _Output #= 1; _Output #= 0).
+
 	
 	%% This puts a final 1 at the end of a chain. 
 	%% It will put a 0 at the end if for any reason, we could not decrement to 1.
@@ -95,8 +106,8 @@ decrement(1, Tail) :-
 /* General case for decrementing */
 decrement(Input, [Head | Tail]) :-
 	(odd(Input) -> pathDownA(Input, Input2); pathDownB(Input, Input2)),
-	write(Input),
-	write('->'),
+	% write(Input),
+	% write('->'),
 	Head #= Input,
 	decrement(Input2, Tail).
 	

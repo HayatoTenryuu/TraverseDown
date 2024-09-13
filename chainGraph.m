@@ -29,13 +29,17 @@
 %}
 
 %% Call function
-In = [1:1000];
+In = 25;
 InStr = string(In);
 Inn = "";
 
 for (n = 1:length(InStr))
     if (n == 1)
         Inn = strcat("[", InStr(n));
+
+        if (isscalar(InStr))
+            Inn = strcat(Inn, "]");
+        end
     elseif (n == length(InStr))
         Inn = strcat(Inn, ", ", InStr(n), "]");
     else
@@ -45,9 +49,15 @@ end
 
 command = "traverseDown.exe" + " " + Inn;
 system(command);
-fileID = fopen("collatz collapse.compendium","r"); 
 
 %% Import Data
+
+fileID = fopen("collatz collapse.compendium","r"); 
+if (fileID == -1)
+    fprintf("Error: Cannot find Compendium." + newline + newline);
+    return;
+end
+
 data = textscan(fileID, "%s");
 deeta = string(data{1});
 
