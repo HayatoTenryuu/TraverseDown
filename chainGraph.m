@@ -1,5 +1,6 @@
 
 %% TraverseDown
+
 % Summary:
 % This runs Collatz down from X to 1, with the syntax:
 %       system(' "traverseDown.exe" [X, Y]');
@@ -23,7 +24,7 @@
     to Prolog, OR if that has limitations, have Prolog itself load the file.
     This is to bypass the MATLAB "Error using system: The command is too long."
 
-2. Fix arrows in quiver plots so they point to next X value correctly.
+2. Fix arrows in quiver plots so they aren't horizontal bars. Probably can't.
 
 %}
 
@@ -53,7 +54,10 @@ deeta = string(data{1});
 
 %% Format Data
 
-%{---Format data as string arrays without brackets---%}
+%{---------------------------------------------------%}
+%{   Format data as string arrays without brackets   %}
+%{---------------------------------------------------%}
+
 A = strsplit(deeta, ",[");
 
 for (n = 1:length(A))
@@ -73,7 +77,11 @@ for (n = 1:length(A))
     end
 end
 
-%{---Convert to a single cell array of numbers (removing duplicates chains)---%}
+
+%{----------------------------------------------------------------------------%}
+%{   Convert to a single cell array of numbers (removing duplicates chains)   %}
+%{----------------------------------------------------------------------------%}
+
 B = {};
 count0 = 0;
 
@@ -93,7 +101,10 @@ end
 X = str2num( B{1} );
 
 
-%{---Generate list of steps from each "X" to the next "1"---%}
+%{----------------------------------------------------------%}
+%{   Generate list of steps from each "X" to the next "1"   %}
+%{----------------------------------------------------------%}
+
 C = {};
 D = {};
 count0 = 0;
@@ -119,7 +130,11 @@ end
 Y = cell2mat(D);
 Z = Y;
 
-%{---Create U and V arrays---%}
+
+%{---------------------------%}
+%{   Create U and V arrays   %}
+%{---------------------------%}
+
 E = {};
 F = {};
 
@@ -137,7 +152,7 @@ for ( n = 1:length(X) )
     if (Y(n) == 0)
         F{n} = 0;
     else
-        F{n} = 1;
+        F{n} = -1;
     end
 end
 
@@ -146,10 +161,111 @@ W = V;
 
 %% Create plots
 
+%{-----------------------------------------%}
+%{   Quiver plot 1 with labels and stuff   %}
+%{-----------------------------------------%}
+
 f = figure(1);
+f.WindowState = "maximized";
 
-%q2 = quiver(X, Y, U, V, 0.25);
-%q3 = quiver3(X, Y, Z, U, V, W);
+Q2A = subplot(1, 2, 1);
+q2a = quiver(Y, X, U, V, 0);
+
+title("Why is this a triangle?");
+subtitle("(Length represents the distance to next number," + newline + "Direction represents going up or down to next number.)");
+
+set( get(Q2A,'XLabel'), 'String', 'Number of Steps until Termination' );
+set( get(Q2A,'YLabel'), 'String', 'Starting Number' );
+
+q2a.MaxHeadSize = 0.1;
+q2a.Marker = "*";
+
+
+%{-----------------------------------------%}
+%{   Quiver plot 2 with labels and stuff   %}
+%{-----------------------------------------%}
+
+Q2B = subplot(1, 2, 2);
+q2b = quiver(Y, X, V, U, 0);
+
+title("Why is this fractal tile-ing?");
+subtitle("(Arrows point to next number.)");
+
+set( get(Q2B,'XLabel'), 'String', 'Number of Steps until Termination' );
+set( get(Q2B,'YLabel'), 'String', 'Starting Number' );
+
+q2b.MaxHeadSize = 0.005;
+q2b.Marker = "*";
+
+
+%{-----------------------------------------%}
+%{   Quiver 3D plot with labels and stuff  %}
+%{-----------------------------------------%}
+
+f = figure(2);
+f.WindowState = "maximized";
+
+Q3 = subplot(1, 1, 1);
+q3 = quiver3(X, Y, Z, U, V, W, 0);
+
+title("I'm not sure seeing it in 3D is helpful, but oh well.");
+subtitle("(Arrows point to next number.)");
+
+set( get(Q3,'XLabel'), 'String', 'Starting Number' );
+set( get(Q3,'YLabel'), 'String', 'Number of Steps until Termination' );
+set( get(Q3,'ZLabel'), 'String', 'Number of Steps until Termination' );
+
+q3.MaxHeadSize = 0.003;
+q3.Marker = "*";
+
+
+%{-----------------------------------------%}
+%{   2D line plot with labels and stuff    %}
+%{-----------------------------------------%}
+
+f = figure(3);
+f.WindowState = "maximized";
+
+P2 = subplot(1, 1, 1);
 p2 = plot(X, Y);
-%p3 = plot3(X, Y, Z);
 
+title("Fractal tiling with points shown.");
+subtitle("(Points show each value.)");
+
+set( get(P2,'XLabel'), 'String', 'Starting Number' );
+set( get(P2,'YLabel'), 'String', 'Number of Steps until Termination' );
+
+set( P2,'XLimitMethod', 'padded');
+set( P2,'YLimitMethod', 'padded');
+
+hold on;
+s2 = scatter(X, Y);
+hold off;
+
+% RGB(1-255) to (RGB 0-1)
+colorR = 13.6;
+colorG = 116.9;
+colorB = 188.9;
+
+RGB = [colorR/255, colorG/255, colorB/255];
+
+s2.Marker = "*";
+s2.MarkerEdgeColor = RGB;
+
+
+%{-----------------------------------------%}
+%{   3D line plot with labels and stuff    %}
+%{-----------------------------------------%}
+
+f = figure(4);
+f.WindowState = "maximized";
+
+P3 = subplot(1, 1, 1);
+p3 = plot3(X, Y, Z);
+
+title("I'm not sure seeing it in 3D is helpful, but oh well.");
+subtitle("(Looks 3D around the bunched up places, but I don't know what Z would be.)");
+
+set( get(P3,'XLabel'), 'String', 'Starting Number' );
+set( get(P3,'YLabel'), 'String', 'Number of Steps until Termination' );
+set( get(P3,'ZLabel'), 'String', 'Number of Steps until Termination' );
