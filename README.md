@@ -24,14 +24,14 @@
 
 ## VERY IMPORTANT NOTES (especially for bug testing):
 1. MATLAB passes arguments to C as:
-	a. argc = length(stuff passed to C)
-		i. If there are no arguments to a function, argc = 1.
-	b. argv = Pointer to the array passed to C
-		i. Hence char**, because arrays decompose into pointers to their first element.
-		ii. This will always point to at least one thing, because you called a function / program.
-	c. *argv[0] = the first thing passed to C 
-		i. This will be the name of the program / function you called.
-	d. *argv[1+] = the arguments passed to C as ASCII char codes
-		i. If you pass a 5, *argv[1] will return "53", because char(53) = "5".
-		ii. Again, 53 is the ASCII code for the number 5.
-		iii. If you pass an array, *argv[1] returns "91", because char(91) = "[".
+   a. argc = length(stuff passed to C)
+      i. If there are no arguments to a function, argc = 1.
+   b. argv = Pointer to the array passed to C
+      i. Hence char**, because arrays decompose into pointers to their first element.
+      ii. This will always point to at least one thing, because you called a function / program.
+   c. *argv[0] = the first thing passed to C 
+      i. This will be the name of the program / function you called.
+   d. *argv[1+] = the arguments passed to C as ASCII char codes
+      i. If you pass a 5, *argv[1] will return "53", because char(53) = "5".
+      ii. Again, 53 is the ASCII code for the number 5.
+      iii. If you pass an array, *argv[1] returns "91", because char(91) = "[".
