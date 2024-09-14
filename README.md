@@ -21,28 +21,3 @@
 4. MATLAB checks if any are subsets of each other (2->1 is within 4->2->1).
 5. Subsets are unified, unique sets are appended, and then the remaining thing is graphed.
 6. Graphs include: Plot, 3D plot (in case it sparks ideas), quiver, and 3D quiver (just in case).
-
-## VERY IMPORTANT NOTES (especially for bug testing):
-1. MATLAB passes arguments to C as:
-   
-   a. argc = length(stuff passed to C)
-      
-      i. If there are no arguments to a function, argc = 1.
-
-   b. argv = Pointer to the array passed to C
-      
-      i. Hence char**, because arrays decompose into pointers to their first element.
-
-      ii. This will always point to at least one thing, because you called a function / program.
-
-   c. *argv[0] = the first thing passed to C 
-
-      i. This will be the name of the program / function you called.
-
-   d. *argv[1+] = the arguments passed to C as ASCII char codes
-
-      i. If you pass a 5, *argv[1] will return "53", because char(53) = "5".
-
-      ii. Again, 53 is the ASCII code for the number 5.
-
-      iii. If you pass an array, *argv[1] returns "91", because char(91) = "[".
