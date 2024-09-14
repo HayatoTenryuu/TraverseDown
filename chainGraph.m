@@ -200,7 +200,7 @@ q2a = quiver(Y, X, U, V, 0);
 title("Why is this a triangle?");
 subtitle("(Length represents the distance to next number," + newline + "Direction represents going up or down to next number.)");
 
-set( get(Q2A,'XLabel'), 'String', 'Number of Steps until Termination' );
+set( get(Q2A,'XLabel'), 'String', 'Degree of Change to Next Number' );
 set( get(Q2A,'YLabel'), 'String', 'Starting Number' );
 
 q2a.MaxHeadSize = 0.1;
@@ -220,7 +220,7 @@ subtitle("(Arrows point to next number.)");
 set( get(Q2B,'XLabel'), 'String', 'Number of Steps until Termination' );
 set( get(Q2B,'YLabel'), 'String', 'Starting Number' );
 
-q2b.MaxHeadSize = 0.0005;
+q2b.MaxHeadSize = 33/max(U);
 q2b.Marker = "*";
 
 
@@ -241,7 +241,7 @@ set( get(Q3,'XLabel'), 'String', 'Starting Number' );
 set( get(Q3,'YLabel'), 'String', 'Number of Steps until Termination' );
 set( get(Q3,'ZLabel'), 'String', 'Number of Steps until Termination' );
 
-q3.MaxHeadSize = 0.0003;
+q3.MaxHeadSize = 33/max(U);
 q3.Marker = "*";
 
 
