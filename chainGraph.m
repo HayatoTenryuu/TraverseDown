@@ -29,7 +29,7 @@
 %}
 
 %% Call function
-In = [1:1000];
+In = [1:2000];
 InStr = string(In);
 Inn = "";
 
