@@ -11,6 +11,7 @@
 
 :- set_prolog_flag(answer_write_options,[max_depth(0)]).			% Make Prolog print all values in a list, instead of truncating the list [a, b, c, | ...].
 :- set_prolog_flag(double_quotes, chars).							% Converts strings into character lists.
+:- set_prolog_flag(verbose, silent).								% Suppresses Prolog banner in terminal.
 
 :- use_module(library(clpfd)).										% Load the library including "#=" integer arithmetic.
 :- use_module(library(lists)).										% Load the library for list manipulation, including reversing the list.
