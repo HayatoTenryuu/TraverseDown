@@ -21,9 +21,3 @@
 4. MATLAB checks if any are subsets of each other (2->1 is within 4->2->1).
 5. Subsets are unified, unique sets are appended, and then the remaining thing is graphed.
 6. Graphs include: Plot, 3D plot (in case it sparks ideas), quiver, and 3D quiver (just in case).
-
-      i. If you pass a 5, *argv[1] will return "53", because char(53) = "5".
-
-      ii. Again, 53 is the ASCII code for the number 5.
-
-      iii. If you pass an array, *argv[1] returns "91", because char(91) = "[".
