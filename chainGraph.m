@@ -28,6 +28,12 @@
 
 %}
 
+
+%% Startup
+
+clear;
+clc;
+
 %% Call function
 In = [1:2000];
 InStr = string(In);
